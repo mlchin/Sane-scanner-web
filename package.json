@@ -1,0 +1,51 @@
+{
+  "name": "sane-scanner-web",
+  "version": "1.0.0",
+  "description": "Web server for SANE scanner access via browser front-end",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js",
+    "server.dev": "nodemon app.js",
+    "ejslint": "node_modules/ejs-lint/cli.js"
+  },
+  "author": "ML Chin",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "morgan": "^1.10.0",
+    "package.json": "^2.0.1"
+  },
+  "devDependencies": {
+    "ejs-lint": "^1.1.0",
+    "eslint": "^7.7.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "terser": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlchin/Sane-scanner-web.git"
+  },
+  "keywords": [
+    "SANE",
+    "scanner",
+    "web",
+    "windows",
+    "client",
+    "raspberry",
+    "pi",
+    "nodejs",
+    "raspbian"
+  ],
+  "bugs": {
+    "url": "https://github.com/mlchin/Sane-scanner-web/issues"
+  },
+  "homepage": "https://github.com/mlchin/Sane-scanner-web#readme"
+}

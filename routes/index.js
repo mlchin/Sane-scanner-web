@@ -1,0 +1,1 @@
+var express=require("express"),router=express.Router();router.get("/",(function(req,res,next){require("./controllers").writeFnsFile(),res.redirect("/scanner")})),module.exports=router;

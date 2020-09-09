@@ -1,0 +1,24 @@
+[Unit]
+Description=SANE Scanner Web Interface
+After=network.target
+
+[Service]
+# Type=simple is used mostly
+# Type=forking is required for 'forever'
+Type=forking
+WorkingDirectory=/home/pi/Sane-scanner-web/
+ExecStart=/usr/local/bin/forever start app.js
+ExecStop=/usr/local/bin/forever stop app.js
+Restart=on-failure
+User=pi
+
+# StandardOutput=syslog
+# StandardOutput=file:/home/pi/Sane-scanner-web/scanner.log
+# StandardError=syslog
+SyslogIdentifier=scanner.service
+
+Environment=PORT=3000
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

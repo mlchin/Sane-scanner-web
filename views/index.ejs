@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('templates/head_tags'); -%>
+  </head>
+  
+  <body class="container">
+  
+    <header>
+      <%- include('templates/navSettings'); -%>
+    </header>
+    
+    <main role="main" class="inner cover">
+    
+      <section id="top_section">
+        <div class="container">
+          <div class="jumbotron">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-1">
+                  <img src="../images/rpi.png" height=80>
+                </div>
+                <div class="col-xs-11">
+                  <h2 class="top-align">Raspberry Pi Scan Server</h2>
+                </div>
+              </div><!-- row -->
+              <div class="row">
+                <div class="col-xs-11 col-xs-offset-1">
+                  <h4 class="lead bottom-align">Configure Scanner Settings</h4>
+                </div>
+              </div><!-- row -->
+              <div class="row">
+                <div class="col-xs-11 col-xs-offset-1">
+                  <h5 class="top-align">Select your scanner settings then hit SCAN</h5>
+                </div>
+              </div><!-- row -->
+            </div><!-- container -->
+          </div><!-- jumbotron -->
+        </div><!-- container -->
+      </section><!-- top_section -->
+      
+      <section id="mid_section">
+        <div class="container">
+          <div class="alert alert-danger" role="alert">
+            <h5 class="text-bold" id="scannerStatus" data-currentstatus='off'>Scanner not found. Check device connection and make sure device is powered on.</h5>
+          </div>
+          <!-- Insert Form for scanner settings below -->
+          <div class="container">
+            <form method="post" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label" for="scanResolution">Scan resolution:</label>
+                <h5 class="help-block">-- higher dpi is sharper scan, but, filesize is bigger &nbsp; | default is [150]</h5>
+                <% scan_resolutions.forEach(function(resolution){ %>
+                  <label class="radio-inline">
+                  <% if (resolution == scan_checked.resolution) { %>
+                      <input type="radio" id="scanResolution" name="scanResolution" value=<%= resolution %> checked><%= resolution %> dpi &emsp;
+                    <% } else { %>
+                      <input type="radio" id="scanResolution" name="scanResolution" value=<%= resolution %> ><%= resolution %> dpi &emsp;
+                  <% } %>
+                  </label>
+                <% }); %>
+              </div><!-- form-group scanResolution-->
+              <div class="form-group">
+                <label class="control-label" for="scanMode">Scan mode:</label>
+                <h5 class="help-block">-- mode &nbsp; | default is [colour]</h5>
+                <% scan_modes.forEach(function(mode){ %>
+                  <label class="radio-inline capitalize">
+                  <% if (mode == scan_checked.mode){ %>
+                    <input type="radio" id="scanMode" name="scanMode" value=<%= mode %> checked><%= mode %> &emsp;
+                  <% } else { %>
+                    <input type="radio" id="scanMode" name="scanMode" value=<%= mode %>><%= mode %> &emsp;
+                  <% } %>
+                  </label>
+                <% }); %>
+              </div><!-- form-group scanMode -->
+              <div class="form-group">
+                <label class="control-label" for="scanFormat">Output file format:</label>
+                <h5 class="help-block">-- format of scan document [ pnm | tiff | png | jpeg ] &nbsp;  | default is [png]</h5>
+                <% scan_formats.forEach(function(format){ %>
+                  <label class="radio-inline">
+                    <% if (format == scan_checked.format){ %>
+                      <input type="radio" id="scanFormat" name="scanFormat" value=<%= format %> checked><%= format %> &emsp;
+                    <% } else { %>
+                      <input type="radio" id="scanFormat" name="scanFormat" value=<%= format %>><%= format %> &emsp;
+                    <% } %>
+                  </label>
+                <% }); %>
+              </div><!-- form-group scanFormat -->
+              <div class="form-group">
+                <label class="control-label" for="filename">Filename:</label>
+                <h5 class="help-block">-- Name of the output file (exclude extension) &nbsp;| required.</h5>
+                <% if (scan_checked.filename == ''){ %>
+                  <input type="text" class="form-control" id="filename" name="filename" placeholder="Ex: Scan_document1" title="Only alphanumeric, dash(-) & underscore(_) allowed." pattern="^[0-9a-zA-Z_][0-9a-zA-Z_-]*$" required>
+                <% } else {  // Confirm Values Entered %>
+                  <input type="text" class="form-control" id="filename" name="filename" value=<%= scan_checked.filename %> readonly>
+                <% } %>
+                <div id="err_message"></div>
+              </div><!-- form-group getFilename -->
+              <div class="form-group" id="button_section">
+                <br>
+                <button class="btn btn-primary btn-lg" id="btnScan" type="button">Scan now</button>
+              </div><!-- form group button section -->
+            </form><!-- form -->
+          </div><!-- container -->
+        </div><!-- container -->
+      </section><!-- mid_section -->
+      
+      <section id="bottom_section">
+        <div class="container">
+          <div id="feedback_area"></div>
+        </div><!-- container -->
+      </section><!-- bottom_section -->
+      
+    </main>
+
+    <footer>
+      <%- include('templates/footer'); -%>
+    </footer>
+    
+    <script>
+      window.onload = function(){
+        document.getElementById('scanner_config').classList.add('active');
+        document.getElementById('scanner_config').classList.add('text-bold');
+        document.getElementById("btnScan").disabled = true;
+        document.getElementById("btnScan").addEventListener("click", checkConfig);
+        
+        const radios = document.getElementsByName('scanFormat');
+        for (let i=0; i < radios.length; i++) {
+            radios[i].addEventListener("change", isFilenameValid);
+        }
+        
+        _funClearElement = function () {
+          clearElement("err_message");
+        }
+        document.getElementById("filename").addEventListener("focusin", _funClearElement);
+        document.getElementById("filename").addEventListener("focusout", isFilenameValid);
+        clientsidePoll();
+      }
+    </script>
+    <script async src="../javascripts/csScanner.js"></script>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </body>
+
+</html>

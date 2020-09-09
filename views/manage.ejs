@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('templates/head_tags'); -%>
+  </head>
+  
+  <body class="container">
+  
+    <header>
+      <%- include('templates/navSettings'); -%>
+    </header>
+    
+    <main role="main" class="inner cover">
+      <section id="top_section">
+        <div class="container">
+          <div class="jumbotron">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-1">
+                  <img src="../images/rpi.png" height=80>
+                </div>
+                <div class="col-xs-11">
+                  <h2 class="top-align">Raspberry Pi Print Server</h2>
+                </div>
+              </div><!-- row -->
+              <div class="row">
+                <div class="col-xs-11 col-xs-offset-1">
+                  <h4 class="lead bottom-align">Manage Scanned Documents</h4>
+                </div>
+              </div><!-- row -->
+              <div class="row">
+                <div class="col-xs-11 col-xs-offset-1">
+                  <h5 class="top-align">Select your file then choose your option</h5>
+                </div>
+              </div><!-- row -->
+            </div><!-- container -->
+          </div><!-- jumbotron -->
+        </div><!-- container -->
+      </section><!-- top section -->
+      
+      <section id="mid_section">
+        <div class="container">
+          <!-- insert table below -->
+          <table id="tbl_FN" class="table table-striped table-hover">
+            <thead>
+              <tr class="row">
+                <th class="text-bold col-xs-1">#</th>
+                <th class="text-bold col-xs-11">Filename</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for (i=0; i<files.length; i++){ %>
+                  <tr id=row<%= i+1 %> class="row clickable-row">
+                    <td class="col-xs-1"><!-- radio button -->
+                      <input type="radio" id=btnRadio<%= i+1 %> name="filename" value="<%= files[i] %>">
+                    </td>
+                    <td class="col-xs-11"><!-- filename -->
+                      <%= files[i] %>
+                    </td>
+                  </tr>
+                <% } %>
+            </tbody>
+          </table>
+          <!-- end table -->
+          <!-- button section -->
+          <div class="form-group" id="button_section">
+            <br>
+            <button class="btn btn-primary btn-lg" id="btnDownload" type="button">Download</button>
+            <button class="btn btn-danger" id="btnDelete" type="button">Delete</button>
+          </div>
+          <!-- end button section -->
+        </div><!-- container -->
+      </section><!-- mid section -->
+
+      <section id="bottom_section"
+        <div class="container">
+          <div id="feedback_area"></div>
+        </div><!-- container -->
+      </section><!-- bottom section -->
+
+    </main>
+    
+    <footer>
+      <%- include('templates/footer'); -%>
+    </footer>
+    
+    <script>
+      window.onload = function(){
+        document.getElementById('manage_file').classList.add('active');
+        document.getElementById('manage_file').classList.add('text-bold');
+        add_event_clickable();
+        initPage();
+      }
+    </script>
+    <script async src="../javascripts/csManageFiles.js"></script>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    
+  </body>
+
+</html>
