@@ -1,6 +1,6 @@
 # Sane-scanner-web
 
-While setting up my Canon E410 printer as a print/scan server on my Raspberry Pi 1, I couldn't find any good/up-to-date SANE client which will allow easy access (no login required) to the scanner from my Windows clients.
+While setting up my Canon E410 printer as a print/scan server on my Raspberry Pi 1, I couldn't find any good/up-to-date SANE client which will allow easy access (no login required) to the server from my Windows clients.
 
 So, I decided to write a web interface that could be installed on the Raspberry Pi 1 that will enable access to the scanner from Windows client (via browser) without requiring the user to login to the Raspberry Pi.
 
