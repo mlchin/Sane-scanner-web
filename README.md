@@ -13,6 +13,6 @@ Currently, the web interface works quite well for my personal use, but, there ma
 Developed and tested on RPi 1 Model B and Canon E410. So, should work even better on newer Raspberry Pi models.
 
 
-NOTE: In order to use this web server, you will need to copy all the files in Github into a directory called "Sane-scanner-web" (/home/pi/Sane-scanner-web). Then, manually create another directory named "ScanDocuments" which will store all scan documents (/home/pi/ScanDocuments). You can also use systemd to run the app as a service on boot. The systemd file is "scanner.service" (included). The service uses "forever" (npm install forever -g) to restart the web server on failure. To access server: http://<Your Server IP Adress>:3000/ 
+NOTE: In order to use this web server, you will need to copy all the files in Github into a directory called "Sane-scanner-web" (/home/pi/Sane-scanner-web). Then, manually create another directory named "ScanDocuments" which will store all scan documents (/home/pi/ScanDocuments). You can also use systemd to run the app as a service on boot. The systemd file is "scanner.service" (included). The service uses "forever" (npm install forever -g) to restart the web server on failure. To access server: http://(Your Server IP Adress):3000/ 
   
 That's it! Enjoy.
